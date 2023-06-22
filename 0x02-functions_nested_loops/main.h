@@ -11,5 +11,6 @@ void print_alphabet(void);
 void print_alphabet_x10(void);
 int print_sign(int n);
 int _isalpha(int c);
+int print_last_digit(int);
 
 #endif

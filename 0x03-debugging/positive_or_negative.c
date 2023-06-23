@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /**
- * main - Entry point
+ * positive_or_negative - Entry point
  * @i: parameter passed
  * Description: 'program that chck positive or negative'
  *

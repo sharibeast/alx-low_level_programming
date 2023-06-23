@@ -2,15 +2,13 @@
 #include <stdio.h>
 
 /**
- * positiv_or_negative - function that check number if
- * is positive or negative
- * Description: 'a function that check number if its posisitive'
- *
- *
+ *main- Entry point
+ *Description: 'Main function'
+ *Return: Integer Value 0
  */
 
 int main(void)
 {
 	positive_or_negative(0);
-	return 0;
+	return (0);
 }

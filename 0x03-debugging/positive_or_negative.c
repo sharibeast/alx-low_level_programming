@@ -2,11 +2,11 @@
 #include <stdio.h>
 
 /**
- * positiv_or_negative - function that check number if
- * is positive or negative
+ * main - Entry point
+ * @i: parameter passed
+ * Description: 'program that chck positive or negative'
  *
- * Description: 'a function that check number if its posisitive'
- * @i: number
+ * Return: Always 1 (Success)
  */
 void positive_or_negative(int i)
 {

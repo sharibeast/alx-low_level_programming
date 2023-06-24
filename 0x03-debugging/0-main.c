@@ -1,10 +1,8 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
- *main- Entry point
- *Description: 'Main function'
- *Return: Integer Value 0
+ * main - tests function that prints if integer is positive or negative
+ * Return: 0
  */
 
 int main(void)
@@ -12,7 +10,7 @@ int main(void)
 	int i;
 
 	i = 0;
-	positive_or_negative(i);
+	positive_or_negative(0);
 
 	return (0);
 }

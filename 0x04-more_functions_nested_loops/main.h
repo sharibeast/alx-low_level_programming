@@ -1,6 +1,8 @@
 #ifndef _PUTCHAR_X_
 #define _PUTCHAR_X_
 
+int _putchar(char c);
+
 int _isdigit(int c);
 
 void print_numbers(void);

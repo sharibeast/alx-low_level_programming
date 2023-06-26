@@ -3,20 +3,23 @@
 
 /**
  * puts2 - function that prints every other character of a string,
+ * starting with the first character, followed by a new line.
  * @str: pointer parameter
- *  Description: 'description'
- *
- * Return: length of str
  * On error, -1 is returned, and errno is set appropriately.
  */
 
+
 void puts2(char *str)
 {
-	int m;
+	int i = 0;
 
-	for (m = 0; str[m] != '\0'; m = m + 2)
+	while (str[i] != '\0')
 	{
-		_putchar(str[m]);
+		if (i % 2 == 0)
+		{
+			_putchar(str[i]);
+		}
+		i++;
 	}
 	_putchar('\n');
 }

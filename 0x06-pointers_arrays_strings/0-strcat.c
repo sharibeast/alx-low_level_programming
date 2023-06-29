@@ -7,24 +7,34 @@
  *
  * Return: a pointer of concatinated string
  */
+
+#include <stdio.h>
+
+/**
+ * _strcat - check the code
+ * Description: 'Change pointer value'
+ * @dest: Pointer to variable str
+ * @src: Pointer variable
+ * Return: Character
+ */
+
 char *_strcat(char *dest, char *src)
 {
-	int m, n;
+	char *destPtr = dest;
 
-	m = 0;
-	n = 0;
-
-	while (dest[m] != '\0')
-		m++;
-
-	while (src[n] != '\0')
+	while (*destPtr != '\0')
 	{
-		src[n] = dest[m];
-		n++;
-		m++;
+		destPtr++;
 	}
 
-	dest[m] = '\0';
+	while (*src != '\0')
+	{
+		*destPtr = *src;
+		destPtr++;
+		src++;
+	}
+
+	*destPtr = '\0';
 
 	return (dest);
 }

@@ -1,17 +1,6 @@
 #include "main.h"
-
 /**
- * _strcat - function appends the src string to the dest string,
- * @dest: destination
- * @src: src
- *
- * Return: a pointer of concatinated string
- */
-
-#include <stdio.h>
-
-/**
- * _strcat - check the code
+ * _strcat - a function to concatenates two strings
  * Description: 'Change pointer value'
  * @dest: Pointer to variable str
  * @src: Pointer variable

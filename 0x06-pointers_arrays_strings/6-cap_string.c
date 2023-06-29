@@ -6,32 +6,32 @@
  *
  * Return: A pointer to the changed string.
  */
+
 char *cap_string(char *str)
 {
-	int i = 0;
+	int caps = 1;
+	char *p = str;
 
-	while (str[i])
+	while (*p != '\0')
 	{
-		while (!(str[i] >= 'a' && str[i] <= 'z'))
-			i++;
+		if (*p >= 'a' && *p <= 'z')
+		{
+			if (caps)
+			{
+				*p = *p - 'a' + 'A';
+				caps = 0;
+			}
+		}
+		else
+		{
+			caps = (*p == ' ' || *p == '\t' || *p == '\n' ||
+				  *p == ',' || *p == ';' || *p == '.' ||
+				  *p == '!' || *p == '?' || *p == '"' ||
+				  *p == '(' || *p == ')' || *p == '{' ||
+				  *p == '}');
+		}
 
-		if (str[i - 1] == ' ' ||
-		    str[i - 1] == '\t' ||
-		    str[i - 1] == '\n' ||
-		    str[i - 1] == ',' ||
-		    str[i - 1] == ';' ||
-		    str[i - 1] == '.' ||
-		    str[i - 1] == '!' ||
-		    str[i - 1] == '?' ||
-		    str[i - 1] == '"' ||
-		    str[i - 1] == '(' ||
-		    str[i - 1] == ')' ||
-		    str[i - 1] == '{' ||
-		    str[i - 1] == '}' ||
-		    i == 0)
-			str[i] -= 32;
-
-		i++;
+		p++;
 	}
 
 	return (str);

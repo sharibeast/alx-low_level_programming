@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /**
- * rot13 - encoder rot13
+ * rot13 - function that prints an integer.
  * @s: pointer to string
  *
  * Return: *s

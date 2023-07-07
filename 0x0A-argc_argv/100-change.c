@@ -15,7 +15,6 @@ int main(int argc, char const *argv[])
 	int cents;
 	int numberOfCoins = 0;
 
-	printf("argc ni %d \n", argc);
 	if (argc == 1 || argc > 2)
 	{
 		printf("Error\n");

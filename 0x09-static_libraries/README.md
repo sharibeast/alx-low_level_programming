@@ -1,2 +1,2 @@
-# alx-low_level_programming recursion
+# alx-low_level_programming static library
 

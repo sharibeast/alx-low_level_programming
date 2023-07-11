@@ -8,13 +8,12 @@
  * Return: pointer to a grid of 2D array.
  */
 
-
 void free_grid(int **grid, int height)
 {
-	int i;
 
-	for (i = 0; i < height; i++)
+	while (height)
 	{
-		free(grid[i]);
+		free(grid[--height]);
 	}
+	free(grid);
 }

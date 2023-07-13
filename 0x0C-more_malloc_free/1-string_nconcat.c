@@ -8,7 +8,7 @@
  * @s2: second string
  * @n: size of second string  to copy
  *
- * Return: Always 0.
+ * Return: concantenated string
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {

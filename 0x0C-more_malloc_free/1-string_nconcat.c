@@ -1,42 +1,45 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include "string.h"
+#include <string.h>
 
 /**
- * string_nconcat - check the code
- * @s1: first string
- * @s2: second string
- * @n: size of second string  to copy
- *
- * Return: concantenated string
+ * string_nconcat - converts a string to an integer
+ * @s1: integer to be converted
+ * @s2: integer to be converted
+ * @n: integer to be converted
+ * Return: Pointer
  */
-char *string_nconcat(char *s1, char *s2, unsigned int n)
+char *string_nconcat(char *s1, char *s2, int n)
 {
-	int len1, len2, res, i, j;
+	int s1_len, s2_len, result_len, i, j;
 	char *result;
 
 	if (s1 == NULL)
+	{
 		s1 = "";
+	}
+
 	if (s2 == NULL)
+	{
 		s2 = "";
+	}
 
-	len1 = 0;
-	while (s1[len1] != '\0')
-		len1++;
+	s1_len = 0;
+	while (s1[s1_len] != '\0')
+		s1_len++;
 
-	len2 = 0;
-	while (s2[len2] != '\0')
-		len2++;
+	s2_len = 0;
+	while (s2[s2_len] != '\0')
+		s2_len++;
 
-	if (n >= len2)
-		n = len2;
+	if (n >= s2_len)
+		n = s2_len;
 
-	res = len1 + n;
-	result = malloc(res + 1);
+	result_len = s1_len + n;
+	result = malloc(result_len + 1);
 	if (result == NULL)
 		return (NULL);
 
-	for (i = 0; i < len1; i++)
+	for (i = 0; i < s1_len; i++)
 		result[i] = s1[i];
 
 	for (j = 0; j < n; j++)

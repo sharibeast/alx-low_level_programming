@@ -4,7 +4,7 @@
 
 /**
  * print_dog - print dog struct
- * @d: a pointer 
+ * @d: a pointer
  *
  */
 

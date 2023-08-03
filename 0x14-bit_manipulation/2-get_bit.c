@@ -7,13 +7,13 @@
  */
 int get_bit(unsigned long int n, unsigned int index)
 {
-	int charBits = 8;
-	int value;
+	unsigned long int val;
 
-	if (index > charBits)
+	if (index > 63)
 	{
 		return (-1);
 	}
-	value = (n >> index) & 1;
-	return (value);
+
+	val = 1 << index;
+	return ((n & val) > 0);
 }

@@ -1,114 +1,72 @@
 #include "main.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 /**
- * checkArgumentsNumber - checks for the correct number of arguments
- * @args: number of arguments
- *
- * Return: void
+ * error_file - checks if files can be opened.
+ * @file_from: file_from.
+ * @file_to: file_to.
+ * @argv: arguments vector.
+ * Return: no return.
  */
-void checkArgumentsNumber(int args)
+void error_file(int file_from, int file_to, char *argv[])
 {
-	if (args != 3)
+	if (file_from == -1)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-}
-
-/**
- * fileFromDoesntExist - checks that file_from exists and can be read
- * @check: checks if true of false
- * @source: file_from name
- * @from: file descriptor of file_from, or -1
- * @to: file descriptor of file_to, or -1
- *
- * Return: void
- */
-void fileFromDoesntExist(ssize_t check, char *source, int from, int to)
-{
-	if (check == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", source);
-		if (from != -1)
-			close(from);
-		if (to != -1)
-			close(to);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
 		exit(98);
 	}
-}
-
-/**
- * createFail - checks that file_to was created and/or can be written to
- * @check: checks if true of false
- * @destination: file_to name
- * @d_from: file descriptor of file_from, or -1
- * @d_to: file descriptor of file_to, or -1
- *
- * Return: void
- */
-void createFail(ssize_t check, char *destination, int d_from, int d_to)
-{
-	if (check == -1)
+	if (file_to == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", destination);
-		if (d_from != -1)
-			close(d_from);
-		if (d_to != -1)
-			close(d_to);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
 		exit(99);
 	}
 }
 
 /**
- * check100 - checks that file descriptors were closed properly
- * @check: checks if true or false
- * @fd: file descriptor
- *
- * Return: void
+ * main - check the code for Holberton School students.
+ * @argc: number of arguments.
+ * @argv: arguments vector.
+ * Return: Always 0.
  */
-void check100(int check, int fd)
+int main(int argc, char *argv[])
 {
-	if (check == -1)
+	int file_from, file_to, err_close;
+	ssize_t nchars, nwr;
+	char buf[1024];
+
+	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		dprintf(STDERR_FILENO, "%s\n", "Usage: cp file_from file_to");
+		exit(97);
+	}
+
+	file_from = open(argv[1], O_RDONLY);
+	file_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0664);
+	error_file(file_from, file_to, argv);
+
+	nchars = 1024;
+	while (nchars == 1024)
+	{
+		nchars = read(file_from, buf, 1024);
+		if (nchars == -1)
+			error_file(-1, 0, argv);
+		nwr = write(file_to, buf, nchars);
+		if (nwr == -1)
+			error_file(0, -1, argv);
+	}
+
+	err_close = close(file_from);
+	if (err_close == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from);
 		exit(100);
 	}
-}
-/**
- * main - opies the content of a file to another file.
- * @args: number of arguments passed
- * @argv: array of pointers to the arguments
- *
- * Return: 0 on success
- */
-int main(int args, char *argv[])
-{
-	int fd_from, fd_to, close_to, close_from;
-	ssize_t lenr, lenw;
-	char buffer[1024];
-	mode_t file_perm;
 
-	checkArgumentsNumber(args);
-	fd_from = open(argv[1], O_RDONLY);
-	fileFromDoesntExist((ssize_t)fd_from, argv[1], -1, -1);
-	file_perm = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
-	fd_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, file_perm);
-	createFail((ssize_t)fd_to, argv[2], fd_from, -1);
-	lenr = 1024;
-	while (lenr == 1024)
+	err_close = close(file_to);
+	if (err_close == -1)
 	{
-		lenr = read(fd_from, buffer, 1024);
-		fileFromDoesntExist(lenr, argv[1], fd_from, fd_to);
-		lenw = write(fd_to, buffer, lenr);
-		if (lenw != lenr)
-			lenw = -1;
-		createFail(lenw, argv[2], fd_from, fd_to);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from);
+		exit(100);
 	}
-	close_to = close(fd_to);
-	close_from = close(fd_from);
-	check100(close_to, fd_to);
-	check100(close_from, fd_from);
 	return (0);
 }

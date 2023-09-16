@@ -5,33 +5,33 @@
 #include <unistd.h>
 
 /**
- * _strncmp - compare two strings
- * @s1: the first string
- * @s2: the second string
- * @n: the max number of bytes to compare
+ * _strncmp - function to compare two strings
+ * @t1: param for the first string
+ * @t2: param for the second string
+ * @p: param for  the max number of bytes to compare
  *
  * Return: 0 if the first n bytes of s1 and s2 are equal, otherwise non-zero
  */
-int _strncmp(const char *s1, const char *s2, size_t n)
+int _strncmp(const char *t1, const char *t2, size_t p)
 {
-	for ( ; n && *s1 && *s2; --n, ++s1, ++s2)
+	for ( ; p && *t1 && *t2; --p, ++t1, ++t2)
 	{
-		if (*s1 != *s2)
-			return (*s1 - *s2);
+		if (*t1 != *t2)
+			return (*t1 - *t2);
 	}
-	if (n)
+	if (p)
 	{
-		if (*s1)
+		if (*t1)
 			return (1);
-		if (*s2)
+		if (*t2)
 			return (-1);
 	}
 	return (0);
 }
 
 /**
- * _close - close a file descriptor and print an error message upon failure
- * @fd: the file descriptor to close
+ * _close - functon to close a file descriptor and print an error message upon failure
+ * @fd: param for the file descriptor to close
  */
 void _close(int fd)
 {
@@ -42,10 +42,10 @@ void _close(int fd)
 }
 
 /**
- * _read - read from a file and print an error message upon failure
- * @fd: the file descriptor to read from
- * @buf: the buffer to write to
- * @count: the number of bytes to read
+ * _read - function to  read from a file and show error if failed
+ * @fd: param for the file descriptor (to read from)
+ * @buf: param for the buffer (to write)
+ * @count: params for the number of bytes (to read)
  */
 void _read(int fd, char *buf, size_t count)
 {
@@ -57,12 +57,12 @@ void _read(int fd, char *buf, size_t count)
 }
 
 /**
- * elf_magic - print ELF magic
- * @buffer: the ELF header
+ * elf_magic - function to print the ELF magic
+ * @buffer: param for the ELF header
  */
 void elf_magic(const unsigned char *buffer)
 {
-	unsigned int i;
+	unsigned int n;
 
 	if (_strncmp((const char *) buffer, ELFMAG, 4))
 	{
@@ -72,13 +72,13 @@ void elf_magic(const unsigned char *buffer)
 
 	printf("ELF Header:\n  Magic:   ");
 
-	for (i = 0; i < 16; ++i)
-		printf("%02x%c", buffer[i], i < 15 ? ' ' : '\n');
+	for (n = 0; n < 16; ++n)
+		printf("%02x%c", buffer[n], n < 15 ? ' ' : '\n');
 }
 
 /**
- * elf_class - print ELF class
- * @buffer: the ELF header
+ * elf_class - function to print ELF class
+ * @buffer: param for the ELF header
  *
  * Return: bit mode (32 or 64)
  */
@@ -101,8 +101,8 @@ size_t elf_class(const unsigned char *buffer)
 }
 
 /**
- * elf_data - print ELF data
- * @buffer: the ELF header
+ * elf_data - function to print ELf data
+ * @buffer:  param for ELF header
  *
  * Return: 1 if big endian, otherwise 0
  */
@@ -125,8 +125,8 @@ int elf_data(const unsigned char *buffer)
 }
 
 /**
- * elf_version - print ELF version
- * @buffer: the ELF header
+ * elf_version -  function to print  ELF version
+ * @buffer: parameter for ELF header
  */
 void elf_version(const unsigned char *buffer)
 {
@@ -139,12 +139,12 @@ void elf_version(const unsigned char *buffer)
 }
 
 /**
- * elf_osabi - print ELF OS/ABI
+ * elf_osabi - This function print the ELF OS/ABI
  * @buffer: the ELF header
  */
 void elf_osabi(const unsigned char *buffer)
 {
-	const char *os_table[19] = {
+	const char *ostable_var[19] = {
 		"UNIX - System V",
 		"UNIX - HP-UX",
 		"UNIX - NetBSD",
@@ -169,7 +169,7 @@ void elf_osabi(const unsigned char *buffer)
 	printf("  %-34s ", "OS/ABI:");
 
 	if (buffer[EI_OSABI] < 19)
-		printf("%s\n", os_table[(unsigned int) buffer[EI_OSABI]]);
+		printf("%s\n", ostable_var[(unsigned int) buffer[EI_OSABI]]);
 	else
 		printf("<unknown: %x>\n", buffer[EI_OSABI]);
 }
@@ -184,9 +184,9 @@ void elf_abivers(const unsigned char *buffer)
 }
 
 /**
- * elf_type - print ELF type
- * @buffer: the ELF header
- * @big_endian: endianness (big endian if non-zero)
+ * elf_type - Print the ELF type
+ * @buffer: ElF header parameter
+ * @big_endian: endianness (param) the  big endian if non-zero
  */
 void elf_type(const unsigned char *buffer, int big_endian)
 {
@@ -217,37 +217,37 @@ void elf_type(const unsigned char *buffer, int big_endian)
 }
 
 /**
- * elf_entry - print entry point address
- * @buffer: string containing the entry point address
- * @bit_mode: bit mode (32 or 64)
+ * elf_entry - print address of the entry point
+ * @buffer:  String contain entry point address
+ * @bit_mode: (32 or 64) bit mode
  * @big_endian: endianness (big endian if non-zero)
  */
 void elf_entry(const unsigned char *buffer, size_t bit_mode, int big_endian)
 {
-	int address_size = bit_mode / 8;
+	int addsize_var = bit_mode / 8;
 
 	printf("  %-34s 0x", "Entry point address:");
 
 	if (big_endian)
 	{
-		while (address_size && !*(buffer))
-			--address_size, ++buffer;
+		while (addsize_var && !*(buffer))
+			--addsize_var, ++buffer;
 
 		printf("%x", *buffer & 0xff);
 
-		while (--address_size > 0)
+		while (--addsize_var > 0)
 			printf("%02x", *(++buffer) & 0xff);
 	}
 	else
 	{
-		buffer += address_size;
+		buffer += addsize_var;
 
-		while (address_size && !*(--buffer))
-			--address_size;
+		while (addsize_var && !*(--buffer))
+			--addsize_var;
 
 		printf("%x", *buffer & 0xff);
 
-		while (--address_size > 0)
+		while (--addsize_var > 0)
 			printf("%02x", *(--buffer) & 0xff);
 	}
 
@@ -255,18 +255,18 @@ void elf_entry(const unsigned char *buffer, size_t bit_mode, int big_endian)
 }
 
 /**
- * main - copy a file's contents to another file
- * @argc: the argument count
- * @argv: the argument values
+ * main - Fle contents to another file (COPY)
+ * @argc: number of arguments
+ * @argv: values of args
  *
  * Return: Always 0
  */
 int main(int argc, const char *argv[])
 {
-	unsigned char buffer[18];
-	unsigned int bit_mode;
-	int big_endian;
 	int fd;
+	unsigned int bitmode_var;
+	unsigned char buffer_var[18];
+	int bigendian_var;
 
 	if (argc != 2)
 	{
@@ -281,20 +281,20 @@ int main(int argc, const char *argv[])
 		exit(98);
 	}
 
-	_read(fd, (char *) buffer, 18);
+	_read(fd, (char *) buffer_var, 18);
 
-	elf_magic(buffer);
-	bit_mode = elf_class(buffer);
-	big_endian = elf_data(buffer);
-	elf_version(buffer);
-	elf_osabi(buffer);
-	elf_abivers(buffer);
-	elf_type(buffer, big_endian);
+	elf_magic(buffer_var);
+	bitmode_var = elf_class(buffer_var);
+	bigendian_var = elf_data(buffer_var);
+	elf_version(buffer_var);
+	elf_osabi(buffer_var);
+	elf_abivers(buffer_var);
+	elf_type(buffer_var, bigendian_var);
 
 	lseek(fd, 24, SEEK_SET);
-	_read(fd, (char *) buffer, bit_mode / 8);
+	_read(fd, (char *) buffer_var, bitmode_var / 8);
 
-	elf_entry(buffer, bit_mode, big_endian);
+	elf_entry(buffer_var, bitmode_var, bigendian_var);
 
 	_close(fd);
 
